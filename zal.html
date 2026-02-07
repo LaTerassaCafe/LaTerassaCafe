@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Основной зал - LA TERASSA</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        /* Дополнительные стили для страницы обычного зала */
+        .hall-header {
+            text-align: center;
+            padding: 60px 20px;
+            background-color: rgba(0, 0, 0, 0.8);
+            border-radius: 10px;
+            margin-bottom: 50px;
+        }
+        
+        .hall-header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            color: #4a90e2;
+            margin-bottom: 20px;
+        }
+        
+        .price-tag {
+            display: inline-block;
+            background-color: #4a90e2;
+            color: #fff;
+            padding: 10px 25px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.5rem;
+            margin: 20px 0;
+        }
+        
+        .hall-description {
+            max-width: 800px;
+            margin: 0 auto;
+            color: #ddd;
+            font-size: 1.2rem;
+            line-height: 1.6;
+        }
+        
+        .tables-section {
+            margin: 60px 0;
+        }
+        
+        .section-subtitle {
+            text-align: center;
+            color: #ddd;
+            font-size: 1.1rem;
+            margin-bottom: 40px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .tables-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 20px;
+            margin-top: 40px;
+        }
+        
+        .table-card {
+            background-color: rgba(0, 0, 0, 0.8);
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+            cursor: pointer;
+        }
+        
+        .table-card:hover {
+            transform: translateY(-5px);
+            border-color: #4a90e2;
+            box-shadow: 0 8px 15px rgba(74, 144, 226, 0.2);
+        }
+        
+        .table-card.selected {
+            border-color: #4a90e2;
+            background-color: rgba(74, 144, 226, 0.1);
+        }
+        
+        .table-number {
+            font-size: 2.2rem;
+            color: #4a90e2;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        
+        .table-capacity {
+            color: #fff;
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+        }
+        
+        .table-price {
+            color: #4a90e2;
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+        
+        .table-features {
+            list-style: none;
+            margin-top: 15px;
+        }
+        
+        .table-features li {
+            color: #aaa;
+            font-size: 0.85rem;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .table-features i {
+            color: #4a90e2;
+        }
+        
+        .booking-summary {
+            background-color: rgba(0, 0, 0, 0.9);
+            padding: 40px;
+            border-radius: 10px;
+            margin-top: 50px;
+            display: none;
+        }
+        
+        .summary-title {
+            color: #fff;
+            font-size: 1.8rem;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+        
+        .summary-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .summary-item {
+            color: #ddd;
+        }
+        
+        .summary-item strong {
+            color: #4a90e2;
+        }
+        
+        .back-button {
+            display: inline-block;
+            background-color: transparent;
+            color: #4a90e2;
+            border: 2px solid #4a90e2;
+            padding: 12px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 20px;
+            transition: all 0.3s;
+        }
+        
+        .back-button:hover {
+            background-color: #4a90e2;
+            color: #fff;
+        }
+        
+        .book-button {
+            background-color: #4a90e2;
+            color: #fff;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: block;
+            margin: 30px auto 0;
+        }
+        
+        .book-button:hover {
+            background-color: #6aa8ff;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(74, 144, 226, 0.4);
+        }
+        
+        .time-slots {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin: 25px 0;
+            justify-content: center;
+        }
+        
+        .time-slot {
+            background-color: #222;
+            color: #ddd;
+            border: 1px solid #444;
+            padding: 12px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .time-slot:hover {
+            background-color: #333;
+        }
+        
+        .time-slot.selected {
+            background-color: #4a90e2;
+            color: #fff;
+            border-color: #4a90e2;
+        }
+        
+        /* Цветовая схема для статусов столиков */
+        .table-card.available {
+            border-left: 5px solid #2ecc71;
+        }
+        
+        .table-card.reserved {
+            border-left: 5px solid #e74c3c;
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+        
+        .table-status {
+            font-size: 0.8rem;
+            padding: 3px 10px;
+            border-radius: 3px;
+            display: inline-block;
+            margin-top: 10px;
+        }
+        
+        .status-available {
+            background-color: rgba(46, 204, 113, 0.2);
+            color: #2ecc71;
+        }
+        
+        .status-reserved {
+            background-color: rgba(231, 76, 60, 0.2);
+            color: #e74c3c;
+        }
+        
+        @media (max-width: 768px) {
+            .hall-header h1 {
+                font-size: 2.2rem;
+            }
+            
+            .tables-grid {
+                grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            }
+            
+            .table-number {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Фоновое изображение -->
+    <div class="background-image" style="background-image: url('https://images.unsplash.com/photo-1414235077428-338989a2e8c0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80')"></div>
+
+    <!-- Главный контейнер -->
+    <div class="container">
+        <!-- Шапка -->
+        <header>
+            <div class="logo">
+                <h1>LA TERASSA</h1>
+                <p class="tagline">Основной зал</p>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Главная</a></li>
+                    <li><a href="index.html#halls">Наши залы</a></li>
+                    <li><a href="index.html#menu">Меню</a></li>
+                    <li><a href="index.html#booking">Бронирование</a></li>
+                    <li><a href="index.html#contacts">Контакты</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <!-- Основной контент -->
+        <main>
+            <!-- Заголовок обычного зала -->
+            <section class="hall-header">
+                <h1>Основной зал</h1>
+                <div class="price-tag">1500 ₸ / час</div>
+                <p class="hall-description">
+                    Уютное пространство с панорамными окнами и теплой атмосферой. Основной зал идеально подходит 
+                    для встреч с друзьями, семейных обедов и романтических ужинов. По вечерам для гостей играет живая музыка.
+                </p>
+            </section>
+
+            <!-- Выбор столика -->
+            <section class="tables-section">
+                <h2 class="section-title">Выберите столик</h2>
+                <p class="section-subtitle">В основном зале доступно 20 столиков. Зеленые - свободны, красные - заняты.</p>
+                
+                <div class="tables-grid" id="tables-container">
+                    <!-- Столики будут добавлены через JavaScript -->
+                </div>
+                
+                <!-- Выбор времени -->
+                <div class="time-selection">
+                    <h3 style="color: #fff; text-align: center; margin-top: 50px;">Выберите время</h3>
+                    <div class="time-slots" id="time-slots">
+                        <div class="time-slot" data-time="11:00">11:00</div>
+                        <div class="time-slot" data-time="13:00">13:00</div>
+                        <div class="time-slot" data-time="15:00">15:00</div>
+                        <div class="time-slot" data-time="17:00">17:00</div>
+                        <div class="time-slot" data-time="19:00">19:00</div>
+                        <div class="time-slot" data-time="21:00">21:00</div>
+                    </div>
+                </div>
+                
+                <!-- Сводка бронирования -->
+                <div class="booking-summary" id="booking-summary">
+                    <h3 class="summary-title">Ваше бронирование</h3>
+                    <div class="summary-details">
+                        <div class="summary-item">
+                            <strong>Столик:</strong> <span id="selected-table">Не выбран</span>
+                        </div>
+                        <div class="summary-item">
+                            <strong>Время:</strong> <span id="selected-time">Не выбрано</span>
+                        </div>
+                        <div class="summary-item">
+                            <strong>Стоимость:</strong> <span id="booking-price">0 ₸</span>
+                        </div>
+                        <div class="summary-item">
+                            <strong>Зал:</strong> Основной зал
+                        </div>
+                    </div>
+                    <button class="book-button" id="confirm-booking">Подтвердить бронирование</button>
+                </div>
+            </section>
+            
+            <!-- Кнопка назад -->
+            <div style="text-align: center; margin: 50px 0;">
+                <a href="index.html" class="back-button">
+                    <i class="fas fa-arrow-left"></i> Вернуться на главную
+                </a>
+                <a href="vipzal.html" class="back-button" style="margin-left: 15px;">
+                    <i class="fas fa-crown"></i> VIP зал
+                </a>
+            </div>
+        </main>
+
+        <!-- Подвал -->
+        <footer>
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h3>LA TERASSA</h3>
+                    <p>Основной зал - уют и комфорт</p>
+                </div>
+                <div class="footer-menu">
+                    <a href="index.html">Главная</a>
+                    <a href="vipzal.html">VIP зал</a>
+                    <a href="index.html#menu">Меню</a>
+                    <a href="index.html#contacts">Контакты</a>
+                </div>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-whatsapp"></i></a>
+                </div>
+            </div>
+            <p class="copyright">© 2023 LA TERASSA Основной зал. Все права защищены.</p>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const tablesContainer = document.getElementById('tables-container');
+            const bookingSummary = document.getElementById('booking-summary');
+            const selectedTableSpan = document.getElementById('selected-table');
+            const selectedTimeSpan = document.getElementById('selected-time');
+            const bookingPriceSpan = document.getElementById('booking-price');
+            const confirmBookingBtn = document.getElementById('confirm-booking');
+            const timeSlots = document.querySelectorAll('.time-slot');
+            
+            let selectedTable = null;
+            let selectedTime = null;
+            const pricePerHour = 1500;
+            
+            // Генерация 20 столиков (некоторые заняты)
+            for (let i = 1; i <= 20; i++) {
+                const tableCard = document.createElement('div');
+                tableCard.className = 'table-card';
+                tableCard.dataset.table = i;
+                
+                // Случайная вместимость (2-8 человек)
+                const capacity = [2, 2, 4, 4, 4, 4, 6, 6, 8][Math.floor(Math.random() * 9)];
+                
+                // Случайный статус (80% свободны, 20% заняты)
+                const isAvailable = Math.random() > 0.2;
+                const statusClass = isAvailable ? 'available' : 'reserved';
+                const statusText = isAvailable ? 'Свободен' : 'Занят';
+                const statusColorClass = isAvailable ? 'status-available' : 'status-reserved';
+                
+                tableCard.classList.add(statusClass);
+                
+                if (!isAvailable) {
+                    tableCard.style.cursor = 'not-allowed';
+                }
+                
+                // Случайные особенности
+                const features = [
+                    ['fas fa-umbrella', 'На террасе'],
+                    ['fas fa-sun', 'У окна'],
+                    ['fas fa-volume-up', 'Близко к сцене'],
+                    ['fas fa-child', 'Детский уголок'],
+                    ['fas fa-fire', 'Камин рядом'],
+                    ['fas fa-tint', 'Фонтан вид']
+                ];
+                
+                // Выбираем 1-2 случайные особенности
+                const randomFeatures = [];
+                const numFeatures = 1 + Math.floor(Math.random() * 2);
+                const shuffledFeatures = [...features].sort(() => 0.5 - Math.random());
+                
+                for (let j = 0; j < numFeatures; j++) {
+                    randomFeatures.push(shuffledFeatures[j]);
+                }
+                
+                tableCard.innerHTML = `
+                    <div class="table-number">${i}</div>
+                    <div class="table-capacity">${capacity} человека</div>
+                    <div class="table-price">${pricePerHour} ₸/час</div>
+                    <div class="table-status ${statusColorClass}">${statusText}</div>
+                    <ul class="table-features">
+                        ${randomFeatures.map(feature => 
+                            `<li><i class="${feature[0]}"></i> ${feature[1]}</li>`
+                        ).join('')}
+                    </ul>
+                `;
+                
+                if (isAvailable) {
+                    tableCard.addEventListener('click', function() {
+                        // Снимаем выделение со всех столиков
+                        document.querySelectorAll('.table-card.available').forEach(card => {
+                            card.classList.remove('selected');
+                        });
+                        
+                        // Выделяем выбранный столик
+                        this.classList.add('selected');
+                        selectedTable = this.dataset.table;
+                        
+                        // Обновляем сводку бронирования
+                        updateBookingSummary();
+                    });
+                } else {
+                    tableCard.addEventListener('click', function() {
+                        alert('Этот столик уже забронирован. Пожалуйста, выберите другой.');
+                    });
+                }
+                
+                tablesContainer.appendChild(tableCard);
+            }
+            
+            // Обработка выбора времени
+            timeSlots.forEach(slot => {
+                slot.addEventListener('click', function() {
+                    // Снимаем выделение со всех слотов
+                    timeSlots.forEach(s => s.classList.remove('selected'));
+                    
+                    // Выделяем выбранный слот
+                    this.classList.add('selected');
+                    selectedTime = this.dataset.time;
+                    
+                    // Обновляем сводку бронирования
+                    updateBookingSummary();
+                });
+            });
+            
+            // Функция обновления сводки брони
